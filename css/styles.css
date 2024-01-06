@@ -53,7 +53,7 @@ nav .fa-solid {
 } */
 
 .logo {
-    width: 70px;
+    width: 100px;
 }
 
 .menu-list {
@@ -215,6 +215,11 @@ nav .fa-solid {
         top: 20%;
     }
     
+
+    .marquee span {
+        animation: marquee 17s linear infinite;
+    }
+
     .chess__collage {
         width: 25%;
         right: 10%;
@@ -236,21 +241,27 @@ nav .fa-solid {
     .slogan__block p {
         font-size: 1.2rem;
     }
+    .marquee span {
+        animation: marquee 17s linear infinite;
+    }
 }
 
 @media (max-width: 768px) {
     .slogan__block {
-        top: 38%;
+        top: 40%;
     }
     .slogan__btn {
         padding: 10px !important;
     }
-
+    .marquee span {
+        animation: marquee 20s linear infinite;
+    }
     .slogan__btn a {
         padding: 0;
     }
 
     .chess__collage {
+        top: 60%;
         width: 45%;
         padding-top: 10px;
     }
@@ -687,7 +698,7 @@ a[href^="tel:"] {
     /* --------- header & cover ---------*/
 
     .logo {
-        width: 50px;
+        width: 80px;
     }
     nav .fa-solid {
         display: block;
