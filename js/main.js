@@ -144,6 +144,7 @@ gsap.from('.services__text', {
     transformOrigin: 'left center',
     ease: 'none',
     stagger: 1,
+    delay: .2,
 })
 gsap.from('.register__ttl', {
     scrollTrigger: {
@@ -247,8 +248,6 @@ const validatePhone = () => {
     return true;
 }
 
-
-
 function validateForm() {
     if (!validateName() || !validatePhone()) {
         submitError.style.display = 'block';
@@ -259,9 +258,10 @@ function validateForm() {
     }
     return true
 }
-console.log('sex')
+
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyeVHkdp7OdrvAaZ9XGXjJ_IGl8Zn3ipFhEl38fi-8FPupq5kyWPMMnpEpcIdAVH-Or/exec'
-const form = document.forms['submit-to-google-sheet']
+const form = document.forms["submit-to-google-sheet"]
 const submitBtn = document.getElementById('submitBtn')
 
 form.addEventListener('submit', e => {
@@ -291,4 +291,158 @@ form.addEventListener('submit', e => {
     }
 })
 
+////////// Modal form
 
+
+if(!localStorage.getItem("timerActive")){
+    countdown.style.display = 'flex'
+    setTimeout(
+        () => {modalWindow.style.display = 'flex'}, 10000
+    )
+}
+
+
+let nameErrorModal = document.getElementById('nameErrorModal');
+let phoneErrorModal = document.getElementById('phoneErrorModal');
+let submitErrorModal = document.getElementById('submitErrorModal');
+
+const validateNameModal = () => {
+    let name = document.getElementById('contactNameModal').value;
+    if (name.length === 0 || !name.match(/^[А-ЯЁа-яё]/) || name.length < 2) {
+        nameErrorModal.innerHTML = 'Введите Ваше имя!';
+        nameErrorModal.classList.add('text-danger')
+        return false;
+    }
+    nameErrorModal.innerHTML = '<i class="fa-solid fa-circle-check position-absolute"></i>';
+    nameErrorModal.classList.add('text-success')
+    nameErrorModal.classList.remove('text-danger')
+    return true;
+}
+
+const validatePhoneModal = () => {
+    let phone = document.getElementById('contactPhoneModal').value
+
+    if (phone.length === 0) {
+        phoneErrorModal.innerHTML = 'Введите Ваш номер!'
+        phoneErrorModal.classList.remove('text-success')
+        phoneErrorModal.classList.add('text-danger')
+        return false
+    }
+    if (phone.length != 11) {
+        phoneErrorModal.classList.remove('text-success')
+        phoneErrorModal.classList.add('text-danger')
+        phoneErrorModal.innerHTML = 'Введите корректный номер!'
+        return false
+    }
+    if (!phone.match(/^[0-9]{11}$/)) {
+        phoneErrorModal.innerHTML = 'Только цифры!'
+        phoneErrorModal.classList.add('text-danger')
+        phoneErrorModal.classList.remove('text-success')
+        return false
+    }
+    phoneErrorModal.classList.remove('text-danger')
+    phoneErrorModal.classList.add('text-success')
+    phoneErrorModal.innerHTML = '<i class="fa-solid fa-circle-check position-absolute"></i>';
+    return true;
+}
+
+function validateFormModal() {
+    if (!validateNameModal() || !validatePhoneModal()) {
+        submitErrorModal.style.display = 'block';
+        submitErrorModal.classList.add("text-danger")
+        submitErrorModal.innerHTML = 'Заполните форму корректно!'
+        setTimeout(()=>{submitErrorModal.style.display = 'none'}, 3000)
+        return false
+    }
+    return true
+}
+
+const modalScriptURL = ''
+const modalForm = document.forms["submit-to-google-sheet-1"]
+const modalSubmitBtn = document.getElementById('modalSubmitBtn')
+
+modalForm.addEventListener('submit', e => {
+    e.preventDefault()
+    if (validateFormModal()) {
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            submitErrorModal.classList.remove("text-danger")
+            submitErrorModal.classList.add("text-success")
+            submitErrorModal.innerHTML = 'Ваша заявка успешно отправлена!'
+            modalSubmitBtn.style.background = '#000'
+            modalSubmitBtn.classList.remove('subscribe')
+            modalSubmitBtn.classList.add('subscribed')
+            modalSubmitBtn.lastChild.style.color = "#131313 !important"
+            modalSubmitBtn.lastChild.innerHTML = 'Вы записаны!'
+            setTimeout(() => {
+                submitErrorModal.innerHTML = ''
+            }, 5000);
+            form.reset()
+            nameErrorModal.innerHTML = ''
+            phoneErrorModal.innerHTML = ''
+        })
+        .catch(error => {
+            submitErrorModal.classList.add('text-danger')
+            submitErrorModal.innerHTML = 'Не удалось записаться, попробуйте позже!'
+        })
+    }
+})
+
+document.addEventListener("DOMContentLoaded", function() {
+    const countdown = document.getElementById("countdown")
+    const countdownElement = document.getElementById("timer");
+    const startButton = document.getElementById("modalSubmitBtn");
+  
+    let endTime = localStorage.getItem("endTime");
+  
+    function updateTimer() {
+        const now = new Date().getTime();
+        const timeRemaining = endTime - now;
+
+        if (timeRemaining <= 0) {
+            countdownElement.textContent = "Время вышло!";
+            localStorage.removeItem("timerActive");
+        } else {
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            countdownElement.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
+            setTimeout(updateTimer, 1000);
+        }
+    }
+  
+    function formatTime(time) {
+      return time < 10 ? `0${time}` : time;
+    }
+  
+    function startTimer() {
+      if (!localStorage.getItem("timerActive")) {
+        endTime = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("endTime", endTime);
+        localStorage.setItem("timerActive", true);
+        updateTimer();
+        countdown.style.display = 'flex'
+      }
+    }
+  
+    startButton.addEventListener('click', startTimer)
+    startButton.addEventListener('click', () => {
+        modalWindow.style.display = 'none'
+    }
+    )
+  
+    if (localStorage.getItem("timerActive")) {
+      updateTimer();
+    }
+});
+if(localStorage.getItem("timerActive")){
+    countdown.style.display = 'flex'
+} else {
+    countdown.style.display = 'none'
+}
+
+
+const closeIcon = document.getElementById("close")
+const modalWindow = document.getElementById("modal")
+closeIcon.addEventListener('click', () => {
+    modalWindow.style.display = 'none'
+})

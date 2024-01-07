@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta property="og:title" content="Школа шахмат Алексея Вихарева">
     <meta property="og:image" content="./images/cover-bg.webp">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Школа шахмат Алексея Вихарева</title>
     <script src="https://kit.fontawesome.com/23011f5f74.js" crossorigin="anonymous"></script>
@@ -259,10 +259,6 @@
                         <input type="phone" name="phone" class="form-control mb-2" id="contactPhone" onkeyup="validatePhone()" placeholder="8 999 999 99 99" required>
                         <span id="phoneError"></span>
                     </div>
-                    <div class="mb-3 position-relative">
-                        <label for="contactPromo" class="form-label text-black">Ваш промокод (при наличии)</label>
-                        <input type="text" name="promo" class="form-control mb-2" id="contactPromo" placeholder="ПРОМО">
-                    </div>
                     <button id="submitBtn" class="subscribe rounded validate__btn" onclick="validateForm()"><a><span>Записаться</span></a></button>
                     <span id="submitError"></span>
                   </form>
@@ -288,10 +284,52 @@
             <p class="m-0 py-4">Москва, 2024</p>
         </div>
     </footer>
+    <div class="modal__block" id="modal">
+        <div class="modal__window">
+            <div class="modal__header">
+                <p class="modal__header_ttl mb-0">Специально для Вас</p>
+                <img id="close" src="images/close.svg" alt="closeModal">
+            </div> 
+            <div class="modal__content">
+                <p>Оставьте свои контакты прямо сейчас и если с Вами не свяжутся в течение 30 минут - месяц занятий Вы получите бесплатно!</p>
+                <form class="col-10 col-lg-5 col-xl-4 p-3 rounded register-form shadowed" name="submit-to-google-sheet-1" onsubmit="false">
+                    <div class="mb-3 position-relative">
+                        <label for="contactNameModal" class="form-label text-black">Как Вас зовут?</label>
+                        <input type="text" name="name" class="form-control mb-2" id="contactNameModal" aria-describedby="emailHelp" onkeyup="validateNameModal()" placeholder="Введите Ваше имя..." required>
+                        <span id="nameErrorModal"></span>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label for="contactPhoneModal" class="form-label text-black">Оставьте номер</label>
+                        <input type="phone" name="phone" class="form-control mb-2" id="contactPhoneModal" onkeyup="validatePhoneModal()" placeholder="8 999 999 99 99" required>
+                        <span id="phoneErrorModal"></span>
+                    </div>
+                    <button id="modalSubmitBtn" class="subscribe rounded validate__btn startTimer" onclick="validateFormModal()"><a><span>Запустить таймер!</span></a></button><br>
+                    <span id="submitErrorModal"></span>
+                </form>
+            </div>
+            <div class="modal__footer">
+                <div class="socials row justify-content-around justify-content-lg-start mb-3 mx-0">
+                    <a href="https://t.me/Alexey_Vikharev" class="subscribe-dark col-auto rounded me-md-3 p-2" target="_blank">
+                        <p class="d-flex align-items-center mb-0 position-relative">
+                            <i class="fa-brands fa-telegram fa-2x pe-2"></i> <span>Telegram</span>
+                        </p>
+                    </a>
+                    <a href="https://wa.me/79636496986" class="subscribe-dark col-auto rounded p-2" target="_blank">
+                        <p class="d-flex align-items-center mb-0 position-relative">
+                            <i class="fa-brands fa-whatsapp fa-2x pe-2"></i> <span>Whatsapp</span>
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="countdown" class="countdown">
+        <span id="timer"></span>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.min.js"></script>
     </script>
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
