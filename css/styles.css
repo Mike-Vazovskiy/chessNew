@@ -815,8 +815,8 @@ a[href^="tel:"] {
 .modal__block {
     position: fixed;
     z-index: 12000;
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 120%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
