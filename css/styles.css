@@ -830,7 +830,8 @@ a[href^="tel:"] {
 }
 
 .modal__window {
-    width: 390px;
+    width: 100%;
+    max-width: 390px;
 }
 .modal__header {
     display: flex;
@@ -873,6 +874,7 @@ a[href^="tel:"] {
     display: flex;
     justify-content: center !important;
     align-items: center !important;
+    gap: 10px;
     width: 100%;
 }
 

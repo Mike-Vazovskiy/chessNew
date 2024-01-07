@@ -273,6 +273,7 @@ form.addEventListener('submit', e => {
             submitError.classList.add("text-success")
             submitError.innerHTML = 'Ваша заявка успешно отправлена!'
             submitBtn.style.background = '#EDC73E'
+            submitBtn.style.border = '1px solid #000'
             submitBtn.classList.remove('subscribe')
             submitBtn.classList.add('subscribed')
             submitBtn.lastChild.style.color = "#131313 !important"
@@ -357,14 +358,14 @@ function validateFormModal() {
     return true
 }
 
-const modalScriptURL = ''
+const modalScriptURL = 'https://script.google.com/macros/s/AKfycbyeVHkdp7OdrvAaZ9XGXjJ_IGl8Zn3ipFhEl38fi-8FPupq5kyWPMMnpEpcIdAVH-Or/exec'
 const modalForm = document.forms["submit-to-google-sheet-1"]
 const modalSubmitBtn = document.getElementById('modalSubmitBtn')
 
 modalForm.addEventListener('submit', e => {
     e.preventDefault()
     if (validateFormModal()) {
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        fetch(modalScriptURL, { method: 'POST', body: new FormData(modalForm)})
         .then(response => {
             submitErrorModal.classList.remove("text-danger")
             submitErrorModal.classList.add("text-success")
@@ -372,8 +373,10 @@ modalForm.addEventListener('submit', e => {
             modalSubmitBtn.style.background = '#000'
             modalSubmitBtn.classList.remove('subscribe')
             modalSubmitBtn.classList.add('subscribed')
-            modalSubmitBtn.lastChild.style.color = "#131313 !important"
+            modalSubmitBtn.lastChild.style.color = "#fff !important"
             modalSubmitBtn.lastChild.innerHTML = 'Вы записаны!'
+            modalSubmitBtn.addEventListener('click', () => {modalWindow.style.display = 'none'})
+            modalSubmitBtn.addEventListener('click', startTimer)
             setTimeout(() => {
                 submitErrorModal.innerHTML = ''
             }, 5000);
@@ -384,6 +387,8 @@ modalForm.addEventListener('submit', e => {
         .catch(error => {
             submitErrorModal.classList.add('text-danger')
             submitErrorModal.innerHTML = 'Не удалось записаться, попробуйте позже!'
+            modalSubmitBtn.style.color = "#fff"
+            modalSubmitBtn.innerHTML = "Ошибка..."
         })
     }
 })
@@ -424,11 +429,11 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
   
-    startButton.addEventListener('click', startTimer)
-    startButton.addEventListener('click', () => {
-        modalWindow.style.display = 'none'
-    }
-    )
+    // startButton.addEventListener('click', startTimer)
+    // startButton.addEventListener('click', () => {
+    //     modalWindow.style.display = 'none'
+    // }
+    // )
   
     if (localStorage.getItem("timerActive")) {
       updateTimer();
